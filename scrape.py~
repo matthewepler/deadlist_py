@@ -8,5 +8,6 @@ from bs4 import BeautifulSoup
 import csv
 
 baseURL = "http://deadlists.com/deadlists/yearresults.asp?KEY=1967"
-html = urlopen(requestUrl)
-print(html)
+html = urlopen(baseURL)
+bs = BeautifulSoup(html, 'lxml')
+print(bs);

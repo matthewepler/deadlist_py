@@ -9,4 +9,5 @@ import csv
 
 baseURL = "http://deadlists.com/deadlists/yearresults.asp?KEY=1967"
 html = urlopen(baseURL)
-print(html)
+bs = BeautifulSoup(html, 'lxml')
+print(bs.prettify());
