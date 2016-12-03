@@ -1,7 +1,10 @@
 ## Setup
-* check for Windows machines, install Python, check for pip
+* Make sure you have Python installed on your machine. For this workshop, we will be using Python 3. 
 
-* Install Homebrew: 
+#### Mac Instructions
+* Open Terminal. Run the command `python -v` to find out what version you have.
+
+* To install Python 3 install Homebrew: 
 ```bash
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
@@ -9,9 +12,15 @@
 
 * Install python3: `brew install python3`
 
-* Install Beautiful Soup: `pip3 install beautifulsoup4`
+
+#### Windows Instructions
+* Follow [these instructions](https://docs.python.org/3/using/windows.html)
+
 
 ## Basic Start, feat. Gilmore Girls
+* Install Beautiful Soup: `pip3 install beautifulsoup4`
+
+* First scrape:
 ```python
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
@@ -22,12 +31,12 @@ soup = BeautifulSoup(html, 'lxml')
 print(soup.prettify());
 ```
 
-## Navigating the Tree - REPL
+## Navigating the Tree 
 * Review basic HTML structure
 	* parents, children, siblings, descendents
 * Show Inspector tools in Chrome
-* how do I get a tag 
-	* review BS documentation
+* How to find and scrape a tag
+	* review [BS documentation](https://www.crummy.com/software/BeautifulSoup/bs4/doc/)
   * soup.head
   * soup.head['title']
   * soup.head.title
@@ -48,8 +57,8 @@ print(soup.prettify());
 
 ## Scrape the Dead!
 * [Deadlists](http://deadlists.com/deadlists/yearresults.asp?KEY=1972)
-* [data specifications](http://www.deadlists.com/dlsite/dataspec.html)
-* [abbreviations table](http://deadlists.com/deadlists/symbols.htm)
+	* [data specifications](http://www.deadlists.com/dlsite/dataspec.html)
+	* [abbreviations table](http://deadlists.com/deadlists/symbols.htm)
 
 ```python
 from urllib.request import urlopen
@@ -68,25 +77,40 @@ for show in shows:
 	city = sibling.find('a').string
 	print(city)
 ```
+* a note about tables - you can skip the 'tbody' tag
 
-* a note about tables - you can skip the <tbody>
+* Thinking long-term-ish.
 
 ## In-Class Assignments 
-* a different and/or shorter way to get to city from location. 
-* Share results
+1. Write a different and/or shorter way to get to city from location. 
 
-* Print the city, date (numbers only), of every encore ever played by the Grateful Dead.
+2. Print the city, date, of every encore ever played by the Grateful Dead.
 
-	* intro to datetime
+	* Hint: you will need datetime to create proper dates
 	```python
 	import datetime
 	date = datetime.date(year, month, day)
 	date.strftime('%m/%d/%Y')
 	```
-* WORK+: do it for more than one year
-* WORK++: add the poster image for each encore show (requires the src attribute of the poster's img tag)
+* Extra Credit #1: add ability to scrape multiple years
+* Extra Credit #2: scrape the direct link to the poster for each show with an encore
 
-* Exporting to csv
+## Exporting to csv
+```python
+import csv
+
+def writeToCSV(all_encores):
+	# using 'with' will automatically close the file after the nested block of code
+	with open('encores.csv', 'w') as csvfile:
+		fieldnames = ['date', 'city']
+		writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+		
+		writer.writeheader()
+		for encore in all_encores:
+			writer.writerow(encore)
+
+		print('file write complete!')
+```
 
 ## Design
 * What is your story
