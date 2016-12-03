@@ -6,11 +6,6 @@
 
 * To install Python 3, visit the [Python downloads](https://www.python.org/downloads/) page and download the installer. Open it and follow the instructions.
 
-* check with command `brew doctor`. If broken use [this page](https://www.digitalocean.com/community/tutorials/how-to-install-python-3-and-set-up-a-local-programming-environment-on-macos)
-
-* Install python3: `brew install python3`
-
-
 #### Windows Instructions
 * Follow [these instructions](https://docs.python.org/3/using/windows.html)
 
