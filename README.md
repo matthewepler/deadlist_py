@@ -5,6 +5,7 @@
 * Open Terminal. Run the command `python -v` to find out what version you have.
 
 * To install Python 3, visit the [Python downloads](https://www.python.org/downloads/) page and download the installer. Open it and follow the instructions.
+	* WINDOWS USERS: When you open the installer, be sure to check the box at the bottom of the install screen. It's the one that says "Add Python 3.5 to PATH." It should be checked. 
 
 #### Windows Instructions
 * Follow [these instructions](https://docs.python.org/3/using/windows.html)
@@ -53,6 +54,33 @@ print(soup.prettify());
 	* [data specifications](http://www.deadlists.com/dlsite/dataspec.html)
 	* [abbreviations table](http://deadlists.com/deadlists/symbols.htm)
 
+* Navigating the tree using parents and siblings.
+	* Here's some simple HTML as an example for these new functions:
+	```html
+		<div class="saucy">
+		<a href="http://www.link.com">texty text</a>
+		<ul>
+			<li> list item #1 </li>
+			<li> list item #2 </li>
+		</ul>
+	</div>
+	```
+	* And here are how we can use parents and siblings to navigate the tree:
+	```python
+	myTag = soup.a
+
+	myTag.parent -> <div class="saucy">...</div>
+	myTag.find_next_sibling('ul') -> <ul>...</ul>
+	myTag.string -> 'texty text'
+	```
+* Suggested Strategy
+	* 1. Find out what makes a show
+	* 2. Get all the shows
+	* 2b. Loop through all the shows
+		* 3. Find out if the show has an encore (hint: use an 'if' statement to check for 'None')
+		* 4. print encore data
+
+* Something to get you started. If we were looking for 'Location' data instead, we might do it this way:
 ```python
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
@@ -65,14 +93,13 @@ shows = soup.find_all('table', attrs={"width": 661})
 
 for show in shows:
 	location = show.find('font', text='Location')
-	loc_parent = location.parent 
-	sibling = loc_parent.find_next_sibling('td')
-	city = sibling.find('a').string
-	print(city)
+	if location != None:
+		loc_parent = location.parent 
+		sibling = loc_parent.find_next_sibling('td')
+		city = sibling.find('a').string
+		print(city)
 ```
 * a note about tables - you can skip the 'tbody' tag
-
-* Thinking long-term-ish.
 
 ## In-Class Assignments 
 1. Write a different and/or shorter way to get to city from location. 
